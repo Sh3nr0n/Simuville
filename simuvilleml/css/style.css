@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700');
+
+html {
+    font-family: 'Quicksand', serif !important;
+
+}
+
+.navbar {
+    background-color:#E9ECEF;
+    font-size: 6vh;
+    /* font-weight: 300; */
+    height:25vh;
+}
