@@ -72,13 +72,34 @@ $('#setUpParty').click(
 function timeGrowth(maxYear,city){
     let year = 0
     let pop = city.popInit
+    let disasterRate
+    console.log("init disaster rate",disasterRate)
+    let disasterYears = city.disasters.disasterYear
     let timer = setInterval(function(){
-    console.log("year",year)
-    console.log("pop",pop)
-    console.log("birthRate",pop.birthRate)
 
+    console.log("year",year)
+    console.log("city name",city.cityName )
+    console.log("pop",pop.toFixed())
     $('#year').text("Année : "+year)
-    pop = Math.floor(pop+(pop*city.birthRate)-(pop*city.deathRate)-(pop*city.disasterRate/100))
+
+    for (i=0;i<disasterYears.length;i++){
+        // console.log("i = %s / city.disasters.disasterRate = %s",i,city.disasters.disasterRate[i])
+        if(year===disasterYears[i]){
+            console.log("year : %s same as disaster year : %s ",year,disasterYears[i])
+            console.log("disaster name : ",city.disasters.disasterName[i])
+
+            disasterRate = city.disasters.disasterRate[i]
+            break;
+
+            } 
+            else {
+                disasterRate = 0   
+            }
+    }
+    console.log("disaster rate : ",disasterRate)
+
+    pop += pop*city.birthRate-pop*city.deathRate-pop*disasterRate*0.01
+    
     year++
     if(year > maxYear) {
         clearInterval(timer);
@@ -101,27 +122,36 @@ $('#simStart').click(
 
     //Get each city data
     let cities = []
+    let next = false
     for (i=0;i<party.cityCount;i++){
         let cityNumber = i+1
         let city = {}
+        city.cityName = $("#cityName"+cityNumber).text()
         city.popInit =  parseFloat($("#cityPop"+cityNumber).val())
         city.birthRate = parseFloat($("#cityBirth"+cityNumber).val())
         city.deathRate = parseFloat($("#cityDeath"+cityNumber).val())
-        city.disasterRate = 0 // Value fixed for test purpose
+        // city.disasterRate = 0 // Value fixed for test purpose
+        city.disasters = {
+            disasterYear:[2,5,8],
+            disasterName:["Eau","Feu","Terre"],
+            disasterRate:[5,8,10]
+
+        }
         cities.push(city)
+
+        
     }
-    console.log(cities)
+    console.log("cities=",cities)
+    console.log("next=",next)
     //Loop through cities objects
     //For each city play the timeCourse function
 ///!\cities object seems to be empty when launching timeGrowth
     //For each city play the cityGrowth function
-    if(cities!==undefined){
     cities.map((city)=> {
         console.log(city);
         timeGrowth(party.partyEndYear,city)
 
     })
-}
 
     }
 )
