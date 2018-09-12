@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700');
 
-html {
+
+/* Override bootstrap default fonts */
+html,body {
     font-family: 'Quicksand', serif !important;
 
 }
@@ -8,6 +10,25 @@ html {
 .navbar {
     background-color:#E9ECEF;
     font-size: 6vh;
-    /* font-weight: 300; */
+    font-weight: 300;
     height:25vh;
+}
+
+h3 {
+    font-weight: 300;
+}
+
+#simStart{
+    /* Resize start button to occupy the full column height*/
+    height:100%;
+}
+
+/* Apply margin to the main html element */
+main {
+    margin-top: 2vh;
+    margin-bottom:2vh;
+}
+
+.tableRows{
+    font-weight: 300;
 }
