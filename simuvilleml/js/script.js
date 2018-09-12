@@ -23,6 +23,8 @@ $('#setUpParty').click(
         party.cityCount = $('#cityCount').val()
         party.partyEndYear = $('#partyEndYear').val()
         console.log("party = %s, cityCount = %s, partyEndYear = %s",JSON.stringify(party), party.cityCount,party.partyEndYear)
+
+        //Save party object in the session storage
         sessionStorage.setItem("party",JSON.stringify(party))
         
         //Generate Html elements to display 
@@ -44,52 +46,32 @@ $('#setUpParty').click(
     
 );
 
-//function to simulate population growth
-
-// function cityGrowth(city){
-
-//     let pop = Math.floor(city.popInit+(city.popInit*city.birthRate)-(city.popInit*city.deathRate)-(city.popInit*city.disasterRate/100))
-//     console.log("pop is : ",pop)
-
-// }
-
-// // function to iterate years
-
-// function timeCourse(maxYear){
-//     let year = 0
-//     let timer = setInterval(function(){
-//     console.log(year)
-//     $('#year').text("Année : "+year)
-
-//     year++
-//     if(year > maxYear) {
-//         clearInterval(timer);
-//     }
-// }, 200);
-
-// }
-
 function timeGrowth(maxYear,city){
+
+    // Init function variables
     let year = 0
     let pop = city.popInit
     let disasterRate
-    console.log("init disaster rate",disasterRate)
     let disasterYears = city.disasters.disasterYear
     let timer = setInterval(function(){
 
+    // To Do : Update HTML with JS values
     console.log("year",year)
     console.log("city name",city.cityName )
     console.log("pop",pop.toFixed())
     $('#year').text("Année : "+year)
 
+    //Check if disaster exists for current year
     for (i=0;i<disasterYears.length;i++){
-        // console.log("i = %s / city.disasters.disasterRate = %s",i,city.disasters.disasterRate[i])
         if(year===disasterYears[i]){
-            console.log("year : %s same as disaster year : %s ",year,disasterYears[i])
-            console.log("disaster name : ",city.disasters.disasterName[i])
 
+            //To Do : Append disaster name and year to HTML
+            console.log("disaster name : ",city.disasters.disasterName[i])
+            console.log("year : %s same as disaster year : %s ",year,disasterYears[i])
+
+            //Set up disaster rate to process population value
             disasterRate = city.disasters.disasterRate[i]
-            break;
+            break; // Patch : Stop iteration if value found (to be refactored)
 
             } 
             else {
@@ -98,9 +80,15 @@ function timeGrowth(maxYear,city){
     }
     console.log("disaster rate : ",disasterRate)
 
+    // Process population value
+
     pop += pop*city.birthRate-pop*city.deathRate-pop*disasterRate*0.01
-    
+
+    //To Do : Update HTML with icon image when population reaches predefined intervals
+
     year++
+
+    //Reset Timer
     if(year > maxYear) {
         clearInterval(timer);
     }
@@ -108,62 +96,13 @@ function timeGrowth(maxYear,city){
 
 }
 
+// TO DO List
 
-
-
-
-$('#simStart').click(
-    function simStart(){
-    console.log("received simStart button click")
-    let party ={}
-    party = JSON.parse(sessionStorage.getItem('party'))
-    console.log("obj party = ",party)
-    console.log("maxYear = ",party.partyEndYear)
-
-    //Get each city data
-    let cities = []
-    let next = false
-    for (i=0;i<party.cityCount;i++){
-        let cityNumber = i+1
-        let city = {}
-        city.cityName = $("#cityName"+cityNumber).text()
-        city.popInit =  parseFloat($("#cityPop"+cityNumber).val())
-        city.birthRate = parseFloat($("#cityBirth"+cityNumber).val())
-        city.deathRate = parseFloat($("#cityDeath"+cityNumber).val())
-        // city.disasterRate = 0 // Value fixed for test purpose
-        city.disasters = {
-            disasterYear:[2,5,8],
-            disasterName:["Eau","Feu","Terre"],
-            disasterRate:[5,8,10]
-
-        }
-        cities.push(city)
-
-        
-    }
-    console.log("cities=",cities)
-    console.log("next=",next)
-    //Loop through cities objects
-    //For each city play the timeCourse function
-///!\cities object seems to be empty when launching timeGrowth
-    //For each city play the cityGrowth function
-    cities.map((city)=> {
-        console.log(city);
-        timeGrowth(party.partyEndYear,city)
-
-    })
-
-    }
-)
-
-
-
-
-
-// Chaque année, la population évolue selon la formule suivante :
-// population = population +(population x taux de natalité) – (population x taux de
-// mortalité) – (population* % population décédée par catastrophe/100).
-// Le résultat est arrondi à l’entier inférieur.
+//Pour afficher la population et l'année en cours:
+//Cacher tout sauf le nom de la ville
+//Append une div année au dessus de la div des villes (pour le déflement de l'année)
+//Faire un append de <h2>Population</h2> pour afficher la pop en cours
+//Afficher les images dans un append a chaque fois qu'un seuil de population est atteint
 
 // Evolution d’affichage :
 // Au fur et à mesure de l’évolution de la population, des images de bâtiment au
@@ -177,13 +116,53 @@ $('#simStart').click(
 // La taille d’une image doit faire 32*32px.
 
 
+$('#simStart').click(
+    function simStart(){
+    console.log("received simStart button click")
 
+    // Create a party object and populates it from the session storage
+    let party ={}
+    party = JSON.parse(sessionStorage.getItem('party'))
+    console.log("obj party = ",party)
+    console.log("maxYear = ",party.partyEndYear)
+
+    let cities = []
+
+    //Get each city data
+
+    for (i=0;i<party.cityCount;i++){
+        let cityNumber = i+1
+        let city = {}
+        // Assign properties to the city object with values from HTML
+        city.cityName = $("#cityName"+cityNumber).text()
+        city.popInit =  parseFloat($("#cityPop"+cityNumber).val())
+        city.birthRate = parseFloat($("#cityBirth"+cityNumber).val())
+        city.deathRate = parseFloat($("#cityDeath"+cityNumber).val())
+
+        // Disasters values fixed for test purpose
+        city.disasters = {
+            disasterYear:[2,5,8],
+            disasterName:["Eau","Feu","Terre"],
+            disasterRate:[5,8,10]
+
+        }
+
+        cities.push(city)
+
+        
+    }
+    console.log("cities=",cities)
+
+    //Launch simulation for each city
+    cities.map((city)=> {
+        console.log(city);
+        timeGrowth(party.partyEndYear,city)
+
+    })
+
+    }
+)
     
 });
 
 
-//Pour afficher la population et l'année en cours:
-//Cacher tout sauf le nom de la ville
-//Append une div année au dessus de la div des villes (pour le déflement de l'année)
-//Faire un append de <h2>Population</h2> pour afficher la pop en cours
-//Afficher les images dans un append a chaque fois qu'un seuil de population est atteint
