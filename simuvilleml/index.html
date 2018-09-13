@@ -22,7 +22,7 @@
 
         <!-- Set up number of cities and years -->
 
-        <div class="container-fluid mt-5">
+        <div id="partyCells" class="container-fluid mt-5">
             <div class="row">
                 <div class="col-10 offset-1">
                     <form>
@@ -52,7 +52,11 @@
 
                     <div class="row">
                         <div id="cityNumber1" class="col-4">
-                            <h3 id="cityName1">Ville </h3>
+                            <h3 id="cityName1">Ville</h3>
+                            <h3 id="cityPopUpdate1"> </h3>
+                            <div id="cityDisasters1"></div>
+                            <div id="cityIcons1"></div>
+                            <div id="cityParameters1">
                             <div class="form-group">
                                 <label for="cityPop1">population initiale</label>
                                 <input type="number" class="form-control" id="cityPop1" value="2" min="2" max="5000">
@@ -67,9 +71,12 @@
                                 <input type="number" class="form-control" id="cityDeath1" value="0.005" min="0" max="1"
                                     step="0.001">
                             </div>
+                            </div>
                         </div>
                         <div id="cityNumber2" class="col-4">
-                            <h3 id="cityName2">Ville </h3>
+                            <h3 id="cityName2">Ville</h3>
+                            <h3 id="cityPopUpdate2"> </h3>
+                            <div id="cityParameters2">
                             <div class="form-group">
                                 <label for="cityPop2">population initiale</label>
                                 <input type="number" class="form-control" id="cityPop2" value="2" min="2" max="5000">
@@ -84,9 +91,12 @@
                                 <input type="number" class="form-control" id="cityDeath2" value="0.005" min="0" max="1"
                                     step="0.001">
                             </div>
+                            </div>
                         </div>
                         <div id="cityNumber3" class="col-4">
-                            <h3 id="cityName3">Ville </h3>
+                            <h3 id="cityName3">Ville</h3>
+                            <h3 id="cityPopUpdate3"> </h3>
+                            <div id="cityParameters3">
                             <div class="form-group">
                                 <label for="cityPop3">population initiale</label>
                                 <input type="number" class="form-control" id="cityPop3" value="2" min="2" max="5000">
@@ -101,10 +111,11 @@
                                 <input type="number" class="form-control" id="cityDeath3" value="0.005" min="0" max="1"
                                     step="0.001">
                             </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-2">
+                <div id="startCell" class="col-2">
                     <button id="simStart" type="button" class="btn btn-danger">Lancer la simulation</button>
 
                 </div>
@@ -113,7 +124,7 @@
 
         <!-- Display statistics table -->
 
-        <div class="container-fluid mt-5">
+        <div id="tabResult" class="container-fluid mt-5">
             <div class="row">
                 <div class="col-10 offset-1">
                         <p>Voici le résumé de votre simulation :</p>
@@ -167,8 +178,8 @@
                         </tbody>
                     </table>
                     <div class="row">
-                        <button type="button" class="btn btn-success m-1">Recommencer</button>
-                        <button type="button" class="btn btn-primary m-1">Exporter en csv</button>
+                        <button id="resetParty" type="button" class="btn btn-success m-1">Recommencer</button>
+                        <button id="exportCsv" type="button" class="btn btn-primary m-1">Exporter en csv</button>
                     </div>
 
                 </div>
