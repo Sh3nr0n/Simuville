@@ -13,6 +13,7 @@ $(document).ready(function() {
   }
 
   $("#setUpParty").click(function setUpParty() {
+    $("#setUpParty").hide();
     // Prevent display error due to second click on setup button
     hideElements();
 
