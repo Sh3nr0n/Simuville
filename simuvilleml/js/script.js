@@ -1,10 +1,10 @@
 $(document).ready(function () {
-    console.log("script ok")
+    console.log("script loaded")
 
 // Hide elements onload
 $('#cityCells').hide()
-
 hideElements()
+
 function hideElements(){
 $("#cityNumber1").hide()
 $("#cityNumber2").hide()
@@ -15,12 +15,12 @@ $('#tabResult').hide()
 $('#setUpParty').click(
     function setUpParty(){
 
-        // Prevent display bug due to second click on setup button
+        // Prevent display error due to second click on setup button
         hideElements()
 
         let party = {}         
         console.log("received setUpParty button click")
-        //Get the number of cities and years
+        //Get the number of cities and years from HTML
         party.cityCount = $('#cityCount').val()
         party.partyEndYear = $('#partyEndYear').val()
         console.log("party = %s, cityCount = %s, partyEndYear = %s",JSON.stringify(party), party.cityCount,party.partyEndYear)
@@ -28,8 +28,7 @@ $('#setUpParty').click(
         //Save party object in the session storage
         sessionStorage.setItem("party",JSON.stringify(party))
         
-        //Generate Html elements to display 
-
+        //Update HTML sections with values to display 
         if (party){
             for (let i=0;i<party.cityCount;i++){
                 let cityNumber = i+1
@@ -44,6 +43,7 @@ $('#setUpParty').click(
     }
 );
 
+// Get a random number between 1 to 36
 function randomizeCity(){
     random = Math.floor((Math.random() * 36) + 1)
     return random
@@ -55,10 +55,9 @@ function timeGrowth(maxYear,city){
     let year = 0
     let pop = city.popInit
     let disasterRate
-    let disasterYears = city.disasters.disasterYear
     let timer = setInterval(function(){
 
-    // To Do : Update HTML with JS values
+    // Update HTML sections with actual values
     console.log("year",year)
     console.log("city name",city.cityName)
     console.log("pop",pop.toFixed())
@@ -67,13 +66,13 @@ function timeGrowth(maxYear,city){
     $('#cityPopUpdate'+city.cityId).text("Population : "+pop.toFixed())
 
     //Check if disaster exists for current year
-    for (i=0;i<disasterYears.length;i++){
-        if(year===disasterYears[i]){
+    for (i=0;i<city.disasters.disasterYear.length;i++){
+        if(year===city.disasters.disasterYear[i]){
 
-            //To Do : Append disaster name and year to HTML
+            //Append disaster name and year to HTML
             console.log("disaster name : ",city.disasters.disasterName[i])
-            console.log("year : %s same as disaster year : %s ",year,disasterYears[i])
-            $("#cityDisasters"+city.cityId).append("<p>"+disasterYears[i]+' : '+city.disasters.disasterName[i]+"</p>")
+            console.log("year : %s same as disaster year : %s ",year,city.disasters.disasterYear[i])
+            $("#cityDisasters"+city.cityId).append("<p>"+city.disasters.disasterYear[i]+' : '+city.disasters.disasterName[i]+"</p>")
 
             //Set up disaster rate to process population value
             disasterRate = city.disasters.disasterRate[i]
@@ -87,9 +86,9 @@ function timeGrowth(maxYear,city){
     console.log("disaster rate : ",disasterRate)
 
     // Process population value
-
     pop += pop*city.birthRate-pop*city.deathRate-pop*disasterRate*0.01  
 
+    // Get icon list from city object
     let imgList=city.imgList
     console.log("imageList",imgList)
 
@@ -108,18 +107,19 @@ function timeGrowth(maxYear,city){
 
     }
     if(pop < 1000 && imgList.length>1 ){
+        // remove images from array, if population < 1000 there is only 1 building
         imgList.splice(1)
     }
 
     if(pop > 1000 && pop < 10000){
-        let maxBuildings = Math.trunc(1+ pop*0.001)
+        let maxBuildings = Math.trunc(1+ pop*0.001)// if population has reached 1000, then there is at least 1 building from the first interval
         if (maxBuildings>imgList.length){
             console.log("maxBuildings = %s imgList.length= %s",maxBuildings,imgList.length)
 
             // How many buildings to add?
             console.log("there is %s building(s) to add",maxBuildings - imgList.length)
-            // create  as much images as buildings
-            // push new image into array
+            
+            // create  as much icons as buildings to add
             for (i= imgList.length;i<maxBuildings;i++){
                 console.log("i = %s , maxBuildings = %s ",i,maxBuildings)
                 let image = {}
@@ -137,7 +137,7 @@ function timeGrowth(maxYear,city){
 
             // How many buildings to remove?
             console.log("there is %s building(s) to remove",imgList.length-maxBuildings)
-            // remove images from array begining at poisition
+            // remove images from array at position equals to maxBuildings
             imgList.splice(maxBuildings)
             console.log("imgList:",imgList)
 
@@ -146,15 +146,14 @@ function timeGrowth(maxYear,city){
     }
 
     if(pop > 10000){
-        let maxBuildings = Math.trunc(9+pop*0.0001)
+        let maxBuildings = Math.trunc(9+pop*0.0001) // if population has reached 10 000, then there is a minimum of 9 buildings
         console.log("maxBuildings = %s imgList.length= %s",maxBuildings,imgList.length)
         if (maxBuildings>imgList.length){
             console.log("maxBuildings = %s imgList.length= %s",maxBuildings,imgList.length)
 
             // How many buildings to add?
             console.log("there is %s building(s) to add",maxBuildings - imgList.length)
-            // create  as much images as buildings
-            // push new image into array
+            // create  as much icons as buildings to add
             for (i= imgList.length;i<maxBuildings;i++){
                 console.log("i = %s , maxBuildings = %s ",i,maxBuildings)
                 let image = {}
@@ -172,7 +171,7 @@ function timeGrowth(maxYear,city){
 
             // How many buildings to remove?
             console.log("there is %s building(s) to remove",imgList.length-maxBuildings)
-            // remove images from array begining at poisition
+            // remove images from array at position equals to maxBuildings
             imgList.splice(maxBuildings)
             console.log("imgList:",imgList)
 
@@ -180,7 +179,7 @@ function timeGrowth(maxYear,city){
         }
     }
 
-    // Display cities in HTML
+    // Display city icons in HTML
     $("#cityIcons"+city.cityId).empty()
     console.log("city icons cleaned")
     imgList.map((img)=>{
@@ -190,45 +189,30 @@ function timeGrowth(maxYear,city){
 
     year++
 
-    //Reset Timer
+    //End of simulation
     if(year > maxYear) {
     clearInterval(timer);
     $('#cityCells').hide()
     $('#partyCells').hide()
     $('#year').hide()
     $('#tabResult').show()
-    //Display stats in this block
+    
     //Get number of year from session storage
     let party ={}
     party = JSON.parse(sessionStorage.getItem('party'))
     console.log("party",party)
+
+    // Display statistics 
     $("#tabYear"+city.cityId).text(party.partyEndYear)
     $("#tabPop"+city.cityId).text(city.popInit)
     $("#tabBirth"+city.cityId).text(city.birthRate)
     $("#tabDeath"+city.cityId).text(city.deathRate)
     $("#tabFinalPop"+city.cityId).text(pop.toFixed())
-    // $("#tabDisaster"+city.cityId).text(
-        // city.map((value)=>{
-        //     console.log("value",JSON.stringify(value))
-        //     "<p>"+value.disasters.disasterYear+" : "+value.disasters.disasterName+"</p>"
-        // }))
-    console.log("city",city)
-    // $("#tabDisaster"+city.cityId).text(
-    //     city.disasters.disasterYear.map((disasterYear)=>{
-    //         console.log("disasterYear",JSON.stringify(disasterYear))
-    //         "<p>"+disasterYear+"</p>"
-    //     }))
 
-
-    $.each(city.disasters.disasterYear, function( index, disasterYear ) {
-        $("#tabDisaster"+city.cityId).append(
-            "<p>"+disasterYear+"</p>"
-        )
-      });
-
-      //TO DO : Use .each to map city.disasters.disasterName values
-
-
+    //Get disasters from city object
+    for (i=0;i<city.disasters.disasterYear.length;i++){
+        $("#tabDisaster"+city.cityId).append("<p>"+city.disasters.disasterYear[i]+' : '+city.disasters.disasterName[i]+"</p>")
+    }
     }
 }, 200);
 
