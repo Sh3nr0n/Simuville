@@ -234,7 +234,6 @@ $(document).ready(function() {
       if (year > maxYear) {
         clearInterval(timer);
         $("#cityCells").hide();
-        $("#partyCells").hide();
         $("#year").hide();
         $("#tabResult").show();
 
@@ -266,6 +265,7 @@ $(document).ready(function() {
 
   $("#simStart").click(function simStart() {
     console.log("received simStart button click");
+    $("#partyCells").hide();
     $("#startCell").hide();
 
     // Create a party object and populates it from the session storage
