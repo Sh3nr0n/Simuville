@@ -120,7 +120,7 @@ $(document).ready(function() {
       }
 
       if (pop > 1000 && pop < 10000) {
-        let maxBuildings = Math.trunc(1 + pop * 0.001); // if population has reached 1000, then there is at least 1 building from the first interval
+        let maxBuildings = Math.trunc(1 + pop * 0.001); // If population has reached 1000, then there is at least 1 building from the first interval
         if (maxBuildings > imgList.length) {
           console.log(
             "maxBuildings = %s imgList.length= %s",
@@ -166,7 +166,7 @@ $(document).ready(function() {
       }
 
       if (pop > 10000) {
-        let maxBuildings = Math.trunc(9 + pop * 0.0001); // if population has reached 10 000, then there is a minimum of 9 buildings
+        let maxBuildings = Math.trunc(9 + pop * 0.0001); // If population has reached 10 000, then there is a minimum of 9 buildings
         console.log(
           "maxBuildings = %s imgList.length= %s",
           maxBuildings,
