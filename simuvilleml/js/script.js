@@ -202,7 +202,7 @@ function timeGrowth(maxYear,city){
     let party ={}
     party = JSON.parse(sessionStorage.getItem('party'))
     console.log("party",party)
-    $(".maxYear").text(party.partyEndYear)
+    $("#tabYear"+city.cityId).text(party.partyEndYear)
     $("#tabPop"+city.cityId).text(city.popInit)
     $("#tabBirth"+city.cityId).text(city.birthRate)
     $("#tabDeath"+city.cityId).text(city.deathRate)
