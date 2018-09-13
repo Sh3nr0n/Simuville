@@ -180,22 +180,53 @@ function timeGrowth(maxYear,city){
         }
     }
 
-                // Display cities in HTML
-                $("#cityIcons"+city.cityId).empty()
-                console.log("city icons cleaned")
-                imgList.map((img)=>{
-                    $("#cityIcons"+img.cityId).append("<img id="+img.id+" src='"+img.src+"' height='32' width='32'/>") 
-                    })
-                console.log("city icons updated")
+    // Display cities in HTML
+    $("#cityIcons"+city.cityId).empty()
+    console.log("city icons cleaned")
+    imgList.map((img)=>{
+        $("#cityIcons"+img.cityId).append("<img id="+img.id+" src='"+img.src+"' height='32' width='32'/>") 
+        })
+    console.log("city icons updated")
 
     year++
 
     //Reset Timer
     if(year > maxYear) {
-        clearInterval(timer);
-        $('#tabResult').show()
-        $('#cityCells').hide()
-        $('#partyCells').hide()
+    clearInterval(timer);
+    $('#cityCells').hide()
+    $('#partyCells').hide()
+    $('#year').hide()
+    $('#tabResult').show()
+    //Display stats in this block
+    //Get number of year from session storage
+    let party ={}
+    party = JSON.parse(sessionStorage.getItem('party'))
+    console.log("party",party)
+    $(".maxYear").text(party.partyEndYear)
+    $("#tabPop"+city.cityId).text(city.popInit)
+    $("#tabBirth"+city.cityId).text(city.birthRate)
+    $("#tabDeath"+city.cityId).text(city.deathRate)
+    $("#tabFinalPop"+city.cityId).text(pop.toFixed())
+    // $("#tabDisaster"+city.cityId).text(
+        // city.map((value)=>{
+        //     console.log("value",JSON.stringify(value))
+        //     "<p>"+value.disasters.disasterYear+" : "+value.disasters.disasterName+"</p>"
+        // }))
+    console.log("city",city)
+    // $("#tabDisaster"+city.cityId).text(
+    //     city.disasters.disasterYear.map((disasterYear)=>{
+    //         console.log("disasterYear",JSON.stringify(disasterYear))
+    //         "<p>"+disasterYear+"</p>"
+    //     }))
+
+
+    $.each(city.disasters.disasterYear, function( index, disasterYear ) {
+        $("#tabDisaster"+city.cityId).append(
+            "<p>"+disasterYear+"</p>"
+        )
+      });
+
+      //TO DO : Use .each to map city.disasters.disasterName values
 
 
     }
