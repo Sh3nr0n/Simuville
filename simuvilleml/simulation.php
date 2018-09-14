@@ -8,7 +8,6 @@ use Classes\Database;
 use Classes\Party;
 use Classes\City;
 
-
 require 'Classes/Autoloader.php';
 Autoloader::register();
 
@@ -22,19 +21,13 @@ switch($_POST['case']){
 
     case 'saveCity':
     $params = $_POST['param'];
-    $cityPop = $param[0];
-    $cityBirth = $param[1];
-    $cityDeath = $param[2];
+    $cityPop = $params[0];
+    $cityBirth = $params[1];
+    $cityDeath = $params[2];
 
     echo "params received by switch case are : $params[0], $params[1], $params[2]";
 
-    // $city = new City($cityPop,$cityBirth,$cityDeath);
-
-    $city = new City;
-    $city-> setCityPop($cityPop);
-    $city-> setCityBirth($cityBirth);
-    $city-> setCityDeath($cityDeath);
-
+    $city = new City($cityPop,$cityBirth,$cityDeath); 
     $city->citySave();
     break;
 }

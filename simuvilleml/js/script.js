@@ -1,36 +1,36 @@
 $(document).ready(function() {
-  console.log("script loaded");
+  console.log("script loaded")
 
   // Hide elements onload
-  $("#cityCells").hide();
-  hideElements();
+  $("#cityCells").hide()
+  hideElements()
 
   function hideElements() {
-    $("#cityNumber1").hide();
-    $("#cityNumber2").hide();
-    $("#cityNumber3").hide();
-    $("#tabResult").hide();
+    $("#cityNumber1").hide()
+    $("#cityNumber2").hide()
+    $("#cityNumber3").hide()
+    $("#tabResult").hide()
   }
 
   $("#setUpParty").click(function setUpParty() {
-    $("#setUpParty").hide();
+    $("#setUpParty").hide()
     // Prevent display error due to second click on setup button
-    hideElements();
+    hideElements()
 
-    let party = {};
-    console.log("received setUpParty button click");
+    let party = {}
+    console.log("received setUpParty button click")
     // Get the number of cities and years from HTML
-    party.cityCount = $("#cityCount").val();
-    party.partyEndYear = $("#partyEndYear").val();
+    party.cityCount = $("#cityCount").val()
+    party.partyEndYear = $("#partyEndYear").val()
     console.log(
       "party = %s, cityCount = %s, partyEndYear = %s",
       JSON.stringify(party),
       party.cityCount,
       party.partyEndYear
-    );
+    )
 
     // Save party object in the session storage
-    sessionStorage.setItem("party", JSON.stringify(party));
+    sessionStorage.setItem("party", JSON.stringify(party))
 
     // Update HTML sections with values to display
     if (party) {
@@ -57,6 +57,7 @@ $(document).ready(function() {
 
   // Ajax function
 
+
   function ajaxCall(method,data) {
     $.ajax({
       method: method,
@@ -64,7 +65,7 @@ $(document).ready(function() {
       timeout: 3000,
       data: data,
       success: function(data) {
-        console.log("called success method from class", data);
+        console.log("Ajax call success, data name passed  is : %s ,", JSON.stringify(data));
         // Call js function on success here if needed
       },
       error: function(data, error) {
@@ -72,6 +73,11 @@ $(document).ready(function() {
       }
     });
   }
+
+
+  // Patch : set the number of retry for setInterval function to save a new city with ajax
+  var retry = 0
+
 
   // Get a random number between 1 to 36
   function randomizeCity() {
@@ -331,20 +337,31 @@ $(document).ready(function() {
         case: 'saveCity',
         param: params
       }
-      ajaxCall("POST",data)
 
-      cities.push(city);
+      // Patch : Delay between each ajax call is too short causing cityId to be a duplicate when saving the city. 
+      let delay = setInterval(function() {
+        ajaxCall("POST",data)
+        retry++
+        // End of simulation
+        if (retry > 10) {
+          console.log(retry)
+          clearInterval(delay)
+        }
+
+      }, 2000)
+
+      cities.push(city)
     }
-    console.log("cities=", cities);
+    console.log("cities=", cities)
 
     // Launch simulation for each city
     cities.map(city => {
-      console.log(city);
-      timeGrowth(party.partyEndYear, city);
-    });
+      console.log(city)
+      timeGrowth(party.partyEndYear, city)
+    })
   });
 
   $("#resetParty").click(function() {
-    window.location.reload(false); // False force reload form cache instead of from server
+    window.location.reload(false) // False force reload form cache instead of from server
   });
 });

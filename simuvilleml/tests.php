@@ -39,7 +39,7 @@ if ($party){
 // echo "pop $pop; birth $birth ; death $death ";
 // $city-> citySave();
 
-$param = [323,0.123,0.001];
+$param = [324,0.123,0.001];
 
 $cityPop = $param[0];
 $cityBirth = $param[1];
