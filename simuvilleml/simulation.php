@@ -7,6 +7,7 @@ use Classes\Autoloader;
 use Classes\Database;
 use Classes\Party;
 use Classes\City;
+use Classes\Disaster;
 
 require 'Classes/Autoloader.php';
 Autoloader::register();

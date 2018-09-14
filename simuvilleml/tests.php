@@ -7,6 +7,8 @@ use Classes\Autoloader;
 use Classes\Database;
 use Classes\Party;
 use Classes\City;
+use Classes\Disaster;
+
 
 require 'Classes/Autoloader.php';
 Autoloader::register();
@@ -21,13 +23,13 @@ if ($db) {
     echo "non connecté ; ";
 }
 
-$party = new Party(50);
+// $party = new Party(50);
 
-if ($party){
-    echo "party created !";
-    var_dump($party);
-    $party->partySave();
-}
+// if ($party){
+//     echo "party created !";
+//     var_dump($party);
+//     $party->partySave();
+// }
 
 // $city = new City(110,0.05,00.5);
 // $city-> setCityPop(90);
@@ -39,10 +41,15 @@ if ($party){
 // echo "pop $pop; birth $birth ; death $death ";
 // $city-> citySave();
 
-$param = [324,0.123,0.001];
+// $param = [324,0.123,0.001];
 
-$cityPop = $param[0];
-$cityBirth = $param[1];
-$cityDeath = $param[2];
-$city = new City($cityPop,$cityBirth,$cityDeath);
-$city->citySave();
+// $cityPop = $param[0];
+// $cityBirth = $param[1];
+// $cityDeath = $param[2];
+// $city = new City($cityPop,$cityBirth,$cityDeath);
+// $city->citySave();
+
+$disaster = new Disaster(50);
+$disaster -> disasterRandom();
+
+

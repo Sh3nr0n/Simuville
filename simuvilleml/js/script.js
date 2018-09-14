@@ -338,7 +338,11 @@ $(document).ready(function() {
         param: params
       }
 
-      // Patch : Delay between each ajax call is too short causing cityId to be a duplicate when saving the city. 
+      // Patch : Delay between each ajax call is too short causing cityId to be a duplicate when saving the city.
+
+      // TO DO : register each city in session storage
+      // Then, out of the loop, call ajax with each city object
+      // Modify the php script consequently
       let delay = setInterval(function() {
         ajaxCall("POST",data)
         retry++
