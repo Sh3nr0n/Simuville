@@ -65,7 +65,7 @@ $(document).ready(function() {
       data: data,
       success: function(data) {
         console.log("called success method from class", data);
-        // Call js function on success here
+        // Call js function on success here if needed
       },
       error: function(data, error) {
         console.log("Data %s : , Error : %s", JSON.stringify(data), error);
@@ -324,6 +324,14 @@ $(document).ready(function() {
         disasterName: ["Eau", "Feu", "Terre"],
         disasterRate: [5, 8, 100]
       };
+      // Save city to database
+      let params = [parseInt(city.popInit),parseFloat(city.birthRate),parseFloat(city.deathRate)]
+      console.log('params',params)
+      let data = {
+        case: 'saveCity',
+        param: params
+      }
+      ajaxCall("POST",data)
 
       cities.push(city);
     }

@@ -7,66 +7,71 @@ use Classes\Database;
 class City {
 
     
-    private $_cityId;
-    private $_cityPop;
-    private $_cityBirth;
-    private $_cityDeath;
+    // private $_cityId;
+    // private $_cityPop;
+    // private $_cityBirth;
+    // private $_cityDeath;
+
+    public $cityId;
+    public $cityPop;
+    public $cityBirth;
+    public $cityDeath;
 
 
-    public function __construct($cityPop,$cityBirth,$cityDeath){
+    // public function __construct($cityPop,$cityBirth,$cityDeath){
 
-        $this->_cityPop = $cityPop ;
-        $this->_cityBirth = $cityBirth;
-        $this->_cityDeath = $cityDeath;
+    //     $this->_cityPop = $cityPop ;
+    //     $this->_cityBirth = $cityBirth;
+    //     $this->_cityDeath = $cityDeath;
         
-        // is a construct needed for this class?
-    }
+    //     // is a construct needed for this class?
+    // }
 
     public function getCityId(){
         
-        return $this->_cityId;
+        return $this->cityId;
 
     }
 
     public function setCityId($cityId){
 
-        $this->_cityId = $cityId;
+        $this->cityId = $cityId;
         
     }
 
     public function getCityPop(){
 
-        return $this->_cityPop;
+        return $this->cityPop;
        
     }
 
     public function setCityPop($cityPop){
 
-        $this->_cityPop = $cityPop;
+        $this->cityPop = $cityPop;
 
     }
 
     public function getCityBirth(){
 
-        return $this->_cityBirth;
+        return $this->cityBirth;
        
     }
 
     public function setCityBirth($cityBirth){
 
-        $this->_cityBirth = $cityBirth;
+        $this->cityBirth = $cityBirth;
 
     }
 
     public function getCityDeath(){
 
-        return $this->_cityDeath;
+        return $this->cityDeath;
         
     }
 
     public function setCityDeath($cityDeath){
 
-        $this->_cityDeath = $cityDeath;
+        $this->cityDeath = $cityDeath;
         
     }
 
@@ -78,9 +83,9 @@ class City {
         $connect = $pdo->connect();
         $reqGetIdCity = $connect->prepare('SELECT id_vil AS "city_Id" FROM t_ville WHERE pi_vil=? AND nat_vil=? AND mor_vil=?') ;
 
-        $reqGetIdCity->bindParam(1, $this->_cityPop);
-        $reqGetIdCity->bindParam(2, $this->_cityBirth);
-        $reqGetIdCity->bindParam(3, $this->_cityDeath);
+        $reqGetIdCity->bindParam(1, $this->cityPop);
+        $reqGetIdCity->bindParam(2, $this->cityBirth);
+        $reqGetIdCity->bindParam(3, $this->cityDeath);
 
         $reqGetIdCity->execute();
         $fetchedIdCity = $reqGetIdCity->fetch();
@@ -88,7 +93,7 @@ class City {
         
         if(!$idCity){
 
-        echo "no id found, city saved!";
+        echo "no id found, city will be saved!";
 
         // Request last cityId from database
 
@@ -100,18 +105,29 @@ class City {
         // Increment new id
         $newIdCity = $lastIdCity+1;
 
-        echo "lastIdCity : $lastIdCity";
+        echo "newIdCity : $newIdCity";
+        echo " cityPop : $this->cityPop";
+        echo " cityBirth : $this->cityBirth";
+        echo " cityDeath :$this->cityDeath";
 
         // Insert new city in database
+        if ($newIdCity && $this->cityPop && $this->cityBirth && $this->cityDeath){
+            echo " newIdCity : $newIdCity";
+            echo " cityPop : $this->cityPop";
+            echo " cityBirth : $this->cityBirth";
+            echo " cityDeath :$this->cityDeath";
 
-        $reqSaveIdCity = $connect->prepare('INSERT INTO t_ville (id_vil,pi_vil,nat_vil,mor_vil) VALUES (?,?,?,?)');
-        $reqSaveIdCity->bindParam(1, $newIdCity);
-        $reqSaveIdCity->bindParam(2, $this->_cityPop);
-        $reqSaveIdCity->bindParam(3, $this->_cityBirth);
-        $reqSaveIdCity->bindParam(4, $this->_cityDeath);
-        $reqSaveIdCity->execute();
-
-        $savedCity = $reqSaveIdCity->fetch();
+            $reqSaveIdCity = $connect->prepare('INSERT INTO t_ville (id_vil,pi_vil, nat_vil,mor_vil) VALUES (?,?,?,?)');
+            $reqSaveIdCity->bindParam(1, $newIdCity);
+            $reqSaveIdCity->bindParam(2, $this->cityPop);
+            $reqSaveIdCity->bindParam(3, $this->cityBirth);
+            $reqSaveIdCity->bindParam(4, $this->cityDeath);
+            $reqSaveIdCity->execute();            
+            
+            echo "\nPDOStatement::errorCode(): ";
+            print $reqSaveIdCity->errorCode();
+        }
+        
 
         }
     }

@@ -29,13 +29,20 @@ if ($party){
     $party->partySave();
 }
 
-$city = new City(110,0.05,00.5);
+// $city = new City(110,0.05,00.5);
 // $city-> setCityPop(90);
 // $city-> setCityBirth(0.05);
 // $city-> setCityDeath(0.005);
-$pop = $city-> getCityPop();
-$birth = $city-> getCityBirth();
-$death = $city-> getCityDeath();
-echo "pop $pop; birth $birth ; death $death ";
-$city-> citySave();
+// $pop = $city-> getCityPop();
+// $birth = $city-> getCityBirth();
+// $death = $city-> getCityDeath();
+// echo "pop $pop; birth $birth ; death $death ";
+// $city-> citySave();
 
+$param = [323,0.123,0.001];
+
+$cityPop = $param[0];
+$cityBirth = $param[1];
+$cityDeath = $param[2];
+$city = new City($cityPop,$cityBirth,$cityDeath);
+$city->citySave();
