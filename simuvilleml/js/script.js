@@ -41,10 +41,39 @@ $(document).ready(function() {
         $("#cityName" + cityNumber).text("Ville " + cityNumber);
         $("#cityNumber" + cityNumber).show();
       }
+
+    // Send data to database
+    let data = {
+      case: 'saveParty',
+      param: party.partyEndYear
+    }
+    
+    ajaxCall("POST",data)
+
     }
 
     $("#cityCells").show();
   });
+
+
+ 
+  // Ajax function
+
+  function ajaxCall(method,data) {
+    $.ajax({
+      method: method,
+      url: "simulation.php",
+      timeout: 3000,
+      data: data,
+      success: function(data) {
+        console.log("called success method from class", data);
+        // Call js function on success here
+      },
+      error: function(data, error) {
+        console.log("Data %s : , Error : %s", JSON.stringify(data), error);
+      }
+    });
+  }
 
   // Get a random number between 1 to 36
   function randomizeCity() {

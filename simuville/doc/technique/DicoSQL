@@ -1,0 +1,6 @@
+
+-- Select last party id from table
+SELECT MAX (id_par) AS "partyId" FROM t_partie
+
+-- Insert a new party into db
+INSERT INTO t_partie (id_par,ann_par,dat_par) VALUES (2,50,'2018-01-01 00:00:00')
