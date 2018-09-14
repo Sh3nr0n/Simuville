@@ -96,40 +96,11 @@ class Disaster {
 
         if ($year >= 10000){
             $this->generateDisaster($year,4,54);                 
-        }
-
-         // year 50 < 500
-        // $rand = rand (1,10);
-
-        // year 500 < 10000
-        // $rand = rand (2,31);
-
-        // year > 10000  
-        // $rand = rand (4,54  );
-
-        //According to number of year loop though random function 1 to n times
-
-
-
-        
+        }       
     }
 
     public function disasterSave(){
 
         
     }
-
-
-
 }
-// Switch case which take the number of year at party set up
-// Then randomize a number between known intervals to echo back when receiving request
-// echo with json encode with folling structure :
-
-// {
-//     disasterYear: [2, 5, 100],
-//     disasterName: ["Eau", "Feu", "Terre"],
-//     disasterRate: [5, 8, 100]
-//   }
-
-// Then 
