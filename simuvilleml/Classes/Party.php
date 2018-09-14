@@ -5,6 +5,7 @@ use Classes\Database;
 class Party {
 
     private $_partyEndYear;
+    public $partyStartTime;
 
     public function __construct($partyEndYear){
 
@@ -14,7 +15,6 @@ class Party {
 
     public function partySave(){
         $pdo = new Database();
-
         $connect = $pdo->connect();
 
         $reqGetIdParty = $connect->prepare('SELECT MAX (id_par) AS "partyId" FROM t_partie');
@@ -40,24 +40,39 @@ class Party {
         echo "Party saved ! ; ";
         var_dump($result );
     }
+    
+    
+    // This function is not needed : To be removed from class diagram
 
-    public function partyStats(){
+    // public function partyStats(){
+
+    // }
+
+
+    public function setPartyStartTime($partyStartTime){
         
-    }
-
-    public function setPartyStartTime(){
+        $this->partyStartTime = $partyStartTime;
         
     }
 
     public function getPartyStartTime(){
-        
+
+        return $this->partyStartTime;
+
     }
 
-    public function setPartyEndYear(){
+    // Already in constructor
+
+
+    // public function setPartyEndYear($partyEndYear){
+
+    //     $this->_partyEndYear = $partyEndYear;
         
-    }
+    // }
 
     public function getPartyEndYear(){
+
+        return $this->_partyEndYear;
         
     }
 

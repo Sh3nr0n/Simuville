@@ -4,3 +4,9 @@ SELECT MAX (id_par) AS "partyId" FROM t_partie
 
 -- Insert a new party into db
 INSERT INTO t_partie (id_par,ann_par,dat_par) VALUES (2,50,'2018-01-01 00:00:00')
+
+-- Insert a new city into db
+INSERT INTO t_ville (id_vil,pi_vil,nat_vil,mor_vil) VALUES (1,50,0.05,0.005)
+
+-- Check if city exists
+select id_vil from t_ville where pi_vil=50 and nat_vil=0.05 and mor_vil=0.005

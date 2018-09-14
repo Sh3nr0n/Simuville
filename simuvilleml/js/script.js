@@ -55,8 +55,6 @@ $(document).ready(function() {
     $("#cityCells").show();
   });
 
-
- 
   // Ajax function
 
   function ajaxCall(method,data) {
