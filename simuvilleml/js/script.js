@@ -58,14 +58,14 @@ $(document).ready(function() {
   // Ajax function
 
 
-  function ajaxCall(method,data) {
-    $.ajax({
+  async function ajaxCall(method,data) {
+    return $.ajax({
       method: method,
       url: "simulation.php",
       timeout: 3000,
       data: data,
       success: function(data) {
-        console.log("Ajax call success, data name passed  is : %s ,", JSON.stringify(data));
+        console.log("Ajax call success :",JSON.stringify(data));
         // Call js function on success here if needed
       },
       error: function(data, error) {
@@ -324,12 +324,29 @@ $(document).ready(function() {
       city.birthRate = parseFloat($("#cityBirth" + cityNumber).val());
       city.deathRate = parseFloat($("#cityDeath" + cityNumber).val());
 
+      // Get disasters
+      let disastersData ={
+        case:"getDisasters",
+        param: party.partyEndYear
+      }
+      console.log("disastersData",disastersData)
+
+      // city.disasters =
+      ajaxCall("POST",disastersData)
+      // console.log('test',test)
+      .then(function(result){
+        console.log("ajax disaster result received")
+        console.log("ajax disaster result",JSON.parse(result))
+
+        city.disasters = JSON.parse(result)
+
       // Disasters values fixed for test purpose
-      city.disasters = {
-        disasterYear: [2, 5, 100],
-        disasterName: ["Eau", "Feu", "Terre"],
-        disasterRate: [5, 8, 100]
-      };
+      // city.disasters = {
+      //   disasterYear: [2, 5, 100],
+      //   disasterName: ["Eau", "Feu", "Terre"],
+      //   disasterRate: [5, 8, 100]
+      // };
+
       // Save city to database
       let params = [parseInt(city.popInit),parseFloat(city.birthRate),parseFloat(city.deathRate)]
       console.log('params',params)
@@ -351,6 +368,8 @@ $(document).ready(function() {
           console.log(retry)
           clearInterval(delay)
         }
+
+      })
 
       }, 2000)
 

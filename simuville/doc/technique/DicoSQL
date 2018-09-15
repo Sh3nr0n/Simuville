@@ -10,3 +10,10 @@ INSERT INTO t_ville (id_vil,pi_vil,nat_vil,mor_vil) VALUES (1,50,0.05,0.005)
 
 -- Check if city exists
 select id_vil from t_ville where pi_vil=50 and nat_vil=0.05 and mor_vil=0.005
+
+-- Insert a new disaster into db
+INSERT INTO t_catastrophe (id_cat,typ_cat,dmg_cat) VALUES (1,'Feu',8)
+
+-- Select last disaster id from table
+SELECT MAX (id_cat) AS "disaster_id" FROM t_catastrophe
+

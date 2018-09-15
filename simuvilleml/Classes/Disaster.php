@@ -42,7 +42,7 @@ class Disaster {
     public function generateDisaster($maxYear,$minDisaster,$maxDisaster){
 
             // Reference arrays with disaster name and damage rate
-            $disasterNames = ["Eau","Feu","Terre","Vent","Epidemie","Guerre"];  
+            $disasterNames = ['Eau','Feu','Terre','Vent','Epidemie','Guerre'];  
             $disasterRates =[5,8,10,4,36,47];
 
             // Arrays to store iteration result
@@ -64,16 +64,38 @@ class Disaster {
                 $disasterName[$i] = $disasterNames[$randomDisaster];
                 $disasterRate[$i] = $disasterRates[$randomDisaster];
                 $disasterYear[$i] = $randomYear;
+
+                // TO DO : Check if disaster exists
+
+                // TO DO : If not create an id ($idDisaster) with sql max function
+                // SQL : SELECT MAX (id_cat) AS "disaster_id" FROM t_catastrophe
+
+                //$idDisaster = result of query +1
+
+                // $this->setDisasterId($idDisaster);
+
+                // Save disaster into database
+                // $this->disasterSave($idDisaster,$randomYear,$disasterNames[$randomDisaster],$disasterRates[$randomDisaster]);
              }
 
-             // Prepare result array with the expected frontend structure 
-             $result=[
-                "disasterYear" => $disasterYear,
-                "disasterName" => $disasterName,
-                "disasterRate" => $disasterRate
-             ];
+            //  Prepare result array with the expected frontend structure 
+             $result=array(
+                'disasterYear' => $disasterYear,
+                'disasterName' => $disasterName,
+                'disasterRate' => $disasterRate
+             );
 
              echo json_encode($result);
+             
+            //  $result=[$disasterYear,$disasterName,$disasterRate];
+
+            //  echo json_encode($result);
+
+            //  echo json_encode($disasterYear);
+            //  echo json_encode($disasterName);
+            //  echo json_encode($disasterRate);
+
+
     }
 
     public function disasterRandom(){
@@ -99,8 +121,10 @@ class Disaster {
         }       
     }
 
-    public function disasterSave(){
+    public function disasterSave($id,$year,$name,$dmg){
 
-        
+        //SQL : INSERT INTO t_catastrophe (id_cat,typ_cat,dmg_cat) VALUES (1,'Feu',8)
+
+                
     }
 }

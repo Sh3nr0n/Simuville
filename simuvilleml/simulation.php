@@ -12,6 +12,8 @@ use Classes\Disaster;
 require 'Classes/Autoloader.php';
 Autoloader::register();
 
+// $_POST['case'] = "getDisasters";
+// $_POST['param'] = 10;
 
 switch($_POST['case']){
 
@@ -30,5 +32,14 @@ switch($_POST['case']){
 
     $city = new City($cityPop,$cityBirth,$cityDeath); 
     $city->citySave();
+    break;
+
+    case 'getDisasters':
+    $disasters = new Disaster($_POST['param']);
+    // $debug = $_POST['param'];
+    // echo " Received disaster request from switch case with $debug param";
+    $disasterList = $disasters->disasterRandom();
+    // var_dump($disasterList);
+    // echo json_encode($disasterList);
     break;
 }
