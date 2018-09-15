@@ -331,15 +331,14 @@ $(document).ready(function() {
       }
       console.log("disastersData",disastersData)
 
-      // city.disasters =
       ajaxCall("POST",disastersData)
-      // console.log('test',test)
+      // Then is needed because of asynchronous result is received
       .then(function(result){
         console.log("ajax disaster result received")
         console.log("ajax disaster result",JSON.parse(result))
 
         city.disasters = JSON.parse(result)
-
+      //Result values look similar to test data here below
       // Disasters values fixed for test purpose
       // city.disasters = {
       //   disasterYear: [2, 5, 100],
@@ -357,7 +356,7 @@ $(document).ready(function() {
 
       // Patch : Delay between each ajax call is too short causing cityId to be a duplicate when saving the city.
 
-      // TO DO : register each city in session storage
+      // TO DO (to fix this issue): register each city in session storage
       // Then, out of the loop, call ajax with each city object
       // Modify the php script consequently
       let delay = setInterval(function() {

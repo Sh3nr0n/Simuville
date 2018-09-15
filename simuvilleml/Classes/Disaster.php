@@ -86,23 +86,11 @@ class Disaster {
              );
 
              echo json_encode($result);
-             
-            //  $result=[$disasterYear,$disasterName,$disasterRate];
-
-            //  echo json_encode($result);
-
-            //  echo json_encode($disasterYear);
-            //  echo json_encode($disasterName);
-            //  echo json_encode($disasterRate);
-
-
     }
 
     public function disasterRandom(){
 
         $year = $this->_disasterYear;
-
-         // year < 50
 
         if ($year < 50){
             $this->generateDisaster($year,0,1);                 
