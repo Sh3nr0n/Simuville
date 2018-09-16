@@ -1,28 +1,33 @@
 <?php 
 
+namespace Classes;
+
 class Database {
 
     protected $_dbUser;
     protected $_dbPwd;
     protected $_dbHost;
     protected $_dbName;
+
+    private $_dbConnect;
     
     public function __construct(){
-        $this->_dbUser = "userName";
-        $this->_dbPwd = "password*";
-        $this->_dbHost = "localhost";
-        $this->_dbName="databaseName"; 
+        $this->_dbUser = "";
+        $this->_dbPwd = "";
+        $this->_dbHost = "";
+        $this->_dbName=""; 
     }
 
     public function connect(){
 
-        //Be careful when specifying the DSN prefix : e.g. "pgsql:host=..." or "mysql:host=..."
-        $dbConnect = new PDO('pgsql:host='.$this->_dbHost.';dbname='.$this->_dbName,$this->_dbUser, $this->_dbPwd);
+        if($this->_dbConnect === null){
+                    //Be careful when specifying the DSN prefix : e.g. "pgsql:host=..." or "mysql:host=..."
 
-        if ($dbConnect){
-        return $dbConnect;
+            $_dbConnect = new \PDO('pgsql:host='.$this->_dbHost.';dbname='.$this->_dbName,$this->_dbUser, $this->_dbPwd);
+
+            $this->_dbConnect = $_dbConnect;
         }
+        
+        return $this->_dbConnect;
     }
 }
-
-?>
